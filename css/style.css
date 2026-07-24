@@ -1,0 +1,552 @@
+/* ============================================================
+   SQLMANTRA — SQL 真言箓 · 全局样式（零依赖，file:// 直开）
+   双主题由 <html data-theme="dark|light"> 驱动 CSS 变量。
+   ============================================================ */
+
+/* ---------- 主题变量（规格【九】） ---------- */
+:root,
+html[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --fg: #c9d1d9;
+  --dim: #8b949e;
+  --accent: #7fdcff;
+  --amber: #ffb454;
+  --border: #30363d;
+  /* 高亮器五类 token 配色（暗色，规格【五】） */
+  --tk-k: #7fdcff;
+  --tk-f: #ffb454;
+  --tk-s: #a5d6a7;
+  --tk-n: #f48fb1;
+  --tk-c: #5c6773;
+  /* level 角标 */
+  --lv1: #7fdcff;
+  --lv2: #ffb454;
+  --lv3: #ff7b72;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --bg: #ffffff;
+  --bg2: #f6f8fa;
+  --fg: #1f2328;
+  --dim: #59636e;
+  --accent: #0969da;
+  --amber: #9a6700;
+  --border: #d0d7de;
+  /* 高亮器五类 token 配色（亮色） */
+  --tk-k: #0550ae;
+  --tk-f: #9a6700;
+  --tk-s: #116329;
+  --tk-n: #8250df;
+  --tk-c: #6e7781;
+  --lv1: #0969da;
+  --lv2: #9a6700;
+  --lv3: #cf222e;
+  color-scheme: light;
+}
+
+/* ---------- 基础 ---------- */
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html { overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow: hidden;              /* 仅内容区独立滚动 */
+  display: flex;
+  flex-direction: column;
+}
+
+code, pre, .mono {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+a { color: var(--accent); }
+
+/* 触控目标与焦点：focus-visible 与 hover 等价 */
+button, input, [tabindex] { outline: none; }
+button:hover, button:focus-visible { border-color: var(--accent); }
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---------- 错误横幅（规格【十二】，常驻可关闭） ---------- */
+#error-banner {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--amber);
+  color: #1f2328;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+#error-banner[hidden] { display: none; }
+#error-banner .banner-text { flex: 1; }
+#error-banner .banner-close {
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 16px;
+  color: #1f2328;
+  border-radius: 6px;
+}
+#error-banner .banner-close:hover,
+#error-banner .banner-close:focus-visible {
+  background: rgba(0, 0, 0, .12);
+}
+
+/* ---------- 顶栏（52px 固定） ---------- */
+.topbar {
+  flex: 0 0 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: relative;
+  z-index: 30;
+}
+
+#nav-toggle {
+  display: none;                 /* ≤1100px 显示 */
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--fg);
+}
+
+/* 品牌区 */
+.brand { display: flex; flex-direction: column; justify-content: center; line-height: 1.25; }
+.brand-title { font-size: 15px; font-weight: 700; letter-spacing: .04em; }
+.brand-sub {
+  font-size: 8.5px;
+  color: var(--dim);
+  letter-spacing: .22em;
+  white-space: nowrap;
+}
+
+/* 搜索框（顶栏居中，宽 420px） */
+.search-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+}
+#search {
+  width: 420px;
+  max-width: 100%;
+  height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+#search::placeholder { color: var(--dim); }
+#search:hover, #search:focus { border-color: var(--accent); }
+#search-icon { display: none; }  /* ≤720px 显示 */
+
+/* 顶栏右侧 */
+.top-right { display: flex; align-items: center; gap: 10px; }
+#hit-counter {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 10.5px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+#theme-toggle {
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+/* ---------- 主布局：左导航 216px + 内容区 ---------- */
+.layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+
+.sidenav {
+  flex: 0 0 216px;
+  width: 216px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+  padding: 10px 0;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 14px 8px 17px;    /* 预留 3px 当前色条 */
+  font-size: 13px;
+  color: var(--fg);
+  text-align: left;
+  border-left: 3px solid transparent;
+}
+.nav-item .nav-label { flex: 1; }
+.nav-item .nav-count {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 10.5px;
+  color: var(--dim);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 6px;
+  line-height: 16px;
+}
+.nav-item:hover, .nav-item:focus-visible {
+  background: var(--bg2);
+}
+.nav-item.active {
+  border-left-color: var(--accent);
+  background: var(--nav-active-bg);
+  font-weight: 600;
+}
+html[data-theme="dark"]  { --nav-active-bg: rgba(127, 220, 255, .12); }
+html[data-theme="light"] { --nav-active-bg: rgba(9, 105, 218, .12); }
+
+#nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .4);
+  z-index: 40;
+}
+
+/* ---------- 内容区（独立滚动，最大宽 880px 居中） ---------- */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+.content-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 16px 16px 60px;
+}
+
+/* ---------- 卡片（规格【七】） ---------- */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.card.flash {
+  animation: card-flash 2s ease-out 1;
+}
+@keyframes card-flash {
+  0%, 60% { box-shadow: 0 0 0 2px var(--accent); }
+  100%    { box-shadow: 0 0 0 0 transparent; }
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-id {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 9px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.card-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  min-width: 0;
+}
+.level-badge {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 0 5px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+.level-1 { color: var(--lv1); }
+.level-2 { color: var(--lv2); }
+.level-3 { color: var(--lv3); }
+.fav-btn {
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--dim);
+  border-radius: 6px;
+}
+.fav-btn:hover, .fav-btn:focus-visible { color: var(--amber); }
+.fav-btn.faved { color: var(--amber); }
+
+/* 代码块（语法 / 示例共用）：等宽 12.5px、--bg2 底、3px accent 左边条 */
+.code-block {
+  position: relative;
+  margin-top: 10px;
+  background: var(--bg2);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+.code-block .block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.code-block .block-label {
+  font-size: 10.5px;
+  color: var(--dim);
+  letter-spacing: .12em;
+}
+.code-block pre {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.copy-btn {
+  min-height: 40px;
+  min-width: 40px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.copy-btn:hover, .copy-btn:focus-visible { color: var(--accent); }
+.copy-btn.ok { color: var(--tk-s); border-color: var(--tk-s); }
+.copy-btn.fail { color: var(--lv3); border-color: var(--lv3); }
+
+/* 高亮器 token */
+.tk-k { color: var(--tk-k); }
+.tk-f { color: var(--tk-f); }
+.tk-s { color: var(--tk-s); }
+.tk-n { color: var(--tk-n); }
+.tk-c { color: var(--tk-c); font-style: italic; }
+
+/* 搜索 <mark> 高亮 */
+mark {
+  background: var(--amber);
+  color: #1f2328;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* 说明段 */
+.card-note {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* 坑点列表 */
+.pitfalls {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.pitfalls li {
+  color: var(--amber);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+.pitfalls li::before { content: "⚠ "; }
+
+/* 方言对照 tab */
+.dialect-tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.dialect-tab {
+  min-height: 40px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--dim);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  white-space: nowrap;
+}
+.dialect-tab:hover, .dialect-tab:focus-visible { color: var(--fg); }
+.dialect-tab.active {
+  color: var(--accent);
+  border-color: var(--border);
+  background: var(--bg2);
+}
+.dialect-panel {
+  font-size: 12.5px;
+  line-height: 1.7;
+  padding: 10px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  margin: 0;
+}
+
+/* JOIN 可视化 */
+.join-viz { margin-top: 12px; }
+.join-viz svg { display: block; width: 100px; height: 60px; }
+.join-viz .viz-caption { font-size: 9.5px; color: var(--dim); margin-top: 4px; }
+
+/* 空结果态 / 加载更多 */
+.empty-state {
+  text-align: center;
+  padding: 70px 20px;
+  color: var(--dim);
+}
+.empty-state .empty-title { font-size: 15px; font-weight: 600; color: var(--fg); }
+.empty-state .empty-query {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 12px;
+  margin-top: 8px;
+  word-break: break-all;
+}
+.empty-state .clear-btn {
+  margin-top: 16px;
+  min-height: 40px;
+  padding: 8px 18px;
+  font-size: 13px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+}
+#load-more {
+  display: block;
+  margin: 4px auto 20px;
+  min-height: 40px;
+  padding: 8px 22px;
+  font-size: 13px;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+#load-more:hover, #load-more:focus-visible { border-color: var(--accent); }
+
+/* ---------- 响应式（规格【十一】） ---------- */
+@media (max-width: 1100px) {
+  #nav-toggle { display: block; }
+  .sidenav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform .18s ease-out;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, .35);
+    padding-top: 14px;
+  }
+  body.nav-open .sidenav { transform: translateX(0); }
+  body.nav-open #nav-overlay { display: block; }
+}
+
+@media (max-width: 720px) {
+  .card-title { font-size: 14px; }
+  .dialect-tabs { overflow-x: auto; }
+  /* 搜索框压缩为图标，点击展开为顶栏整行覆盖 */
+  #search { display: none; }
+  #search-icon {
+    display: block;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  body.search-open .search-wrap {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    z-index: 35;
+    padding: 0 12px;
+  }
+  body.search-open #search { display: block; width: 100%; }
+  body.search-open #search-icon { display: none; }
+  .brand-sub { display: none; }
+}
+
+/* ---------- 打印（规格【九】） ---------- */
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible;
+    height: auto;
+  }
+  .topbar, .sidenav, #nav-overlay, #error-banner,
+  .copy-btn, .fav-btn, #load-more { display: none !important; }
+  .layout, .content { display: block; overflow: visible; }
+  .content-inner { max-width: none; padding: 0; }
+  .card {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #000000;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .code-block, .dialect-panel {
+    background: #ffffff !important;
+    border-color: #000000;
+  }
+  .dialect-tabs { border-bottom-color: #000000; }
+  .dialect-tab, .dialect-tab.active {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000;
+  }
+  mark { background: none; color: #000000; }
+  .tk-k, .tk-f, .tk-s, .tk-n, .tk-c { color: #000000; font-style: normal; }
+  .card-id, .card-note, .level-badge, .pitfalls li,
+  .block-label, .empty-state, .empty-state .empty-title,
+  .nav-count, .viz-caption { color: #000000 !important; }
+  /* JOIN 示意图：暗色 accent 浅青在白纸上不可读，强制黑线黑填充 */
+  .join-viz svg circle { stroke: #000000 !important; }
+  .join-viz svg circle[fill="var(--accent)"] { fill: #000000 !important; }
+}
