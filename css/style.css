@@ -1,6 +1,7 @@
 /* ============================================================
    SQLMANTRA — SQL 真言箓 · 全局样式（零依赖，file:// 直开）
    双主题由 <html data-theme="dark|light"> 驱动 CSS 变量。
+   编纂：鹤仙人
    ============================================================ */
 
 /* ---------- 主题变量（规格【九】） ---------- */
@@ -150,6 +151,12 @@ input:focus-visible,
   font-size: 8.5px;
   color: var(--dim);
   letter-spacing: .22em;
+  white-space: nowrap;
+}
+.brand-author {
+  font-size: 8.5px;
+  color: var(--amber);
+  letter-spacing: .3em;
   white-space: nowrap;
 }
 
@@ -509,7 +516,7 @@ mark {
   }
   body.search-open #search { display: block; width: 100%; }
   body.search-open #search-icon { display: none; }
-  .brand-sub { display: none; }
+  .brand-sub, .brand-author { display: none; }
 }
 
 /* ---------- 打印（规格【九】） ---------- */

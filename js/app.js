@@ -1,6 +1,7 @@
 /* ============================================================
    SQLMANTRA — SQL 真言箓 · 交互主逻辑（零依赖，ES2019，file:// 直开）
    数据契约：window.SQLMANTRA_CATALOG + window.SQLMANTRA_DATA['<key>']
+   编纂：鹤仙人
    ============================================================ */
 (function () {
   'use strict';
@@ -807,6 +808,9 @@
 
     render();
     jumpToHash(hashId);
+
+    /* 彩蛋：作者署名（隐藏，仅 DevTools 控制台可见） */
+    console.log('%c☯ SQLMANTRA · 鹤仙人 编纂', 'color:#7fdcff;font-weight:bold;');
   }
 
   if (document.readyState === 'loading') {
